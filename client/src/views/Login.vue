@@ -95,7 +95,8 @@ export default {
               throw new Error(error.message);
             });
           })
-          .then(() => {
+          .then((result) => {
+            localStorage.setItem("token", result.token);
             this.$router.push("/dashboard");
           })
           .catch((error) => {
@@ -108,7 +109,7 @@ export default {
       if (error === undefined) {
         return true;
       }
-      this.errorMessage = "Wrong Username or Password.";
+      this.errorMessage = "Invalid Username or Password.";
       return false;
     },
   },
