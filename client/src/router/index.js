@@ -6,48 +6,49 @@ import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard.vue";
 
 Vue.use(VueRouter);
+
 function isLoggedIn(to, from, next) {
-  if (localStorage.getItem("token")) {
-    next("/dashboard");
-  } else {
-    next();
-  }
+    if (localStorage.getItem("token")) {
+        next("/dashboard");
+    } else {
+        next();
+    }
 }
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/signup",
-    name: "SignUp",
-    component: SignUp,
-    beforeEnter: isLoggedIn,
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-    beforeEnter: isLoggedIn,
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    compoment: Dashboard,
-    beforeEnter: (to, from, next) => {
-      if (localStorage.getItem("token")) {
-        next();
-      } else {
-        next("/login");
-      }
+    {
+        path: "/",
+        name: "Home",
+        component: Home,
     },
-  },
+    {
+        path: "/signup",
+        name: "SignUp",
+        component: SignUp,
+        beforeEnter: isLoggedIn,
+    },
+    {
+        path: "/login",
+        name: "Login",
+        component: Login,
+        beforeEnter: isLoggedIn,
+    },
+    {
+        path: "/dashboard",
+        name: "Dashboard",
+        component: Dashboard,
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+                next("/login");
+            } else {
+                next();
+            }
+        },
+    },
 ];
 
 const router = new VueRouter({
-  routes,
+    routes,
 });
 
 export default router;
