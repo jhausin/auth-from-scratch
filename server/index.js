@@ -18,7 +18,6 @@ app.use(
 );
 app.use(express.json());
 app.use(middlewares.checkTokenSetUser);
-app.use(middlewares.isLoggedIn);
 
 app.get("/", (req, res) => {
     res.json({
